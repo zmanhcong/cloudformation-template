@@ -1,0 +1,22 @@
+Mappings:
+  RegionMap:
+    us-east-1:
+      HVM64: ami-090fa75af13c156b4
+      HVMG2: ami-0a584ac55a7631c0c
+    ap-southeast-1:
+      HVM64: ami-0ff89c4ce7de192ea     #ap-southeast-1 là Key, còn HVM64 là value
+      HVMG2: ami-0be9df32ae9f92309
+Resources:
+  myEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', HVM64]
+      InstanceType: m1.small
+#Ref: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html
+
+
+# FindInMap là tìm theo kiểu Key, value. 
+# Với ví dụ trên thì 
+#     Region: là region của mình
+#     HVM64: Key
+#   => hệ thống sẽ đi tìm Region của mình + Key -> từ đó sẽ có value. ví dụ: region: us-east-1, Key: HVM64 thì kết quả nhận được sẽ là  ami-090fa75af13c156b4
